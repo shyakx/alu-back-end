@@ -49,4 +49,3 @@ if __name__ == "__main__":
 
     # Call the function to get and display employee TODO list progress
     get_employee_todo_progress(employee_id)
-
