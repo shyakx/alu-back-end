@@ -7,6 +7,7 @@ import sys
 import requests
 import csv
 
+
 def get_employee_todo_progress(employee_id):
     """
     Fetch and display the TODO list progress for a given employee ID.
@@ -54,6 +55,7 @@ def get_employee_todo_progress(employee_id):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     # Check if an employee ID is provided as a command-line argument
