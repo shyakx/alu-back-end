@@ -1,9 +1,13 @@
 #!/usr/bin/python3
 
+#module requests  impoting to be used in my codes
 import requests
+#provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
 import sys
 
 def get_employee_todo_progress(employee_id):
+
+
     # Base URL for the JSONPlaceholder API
     base_url = 'https://jsonplaceholder.typicode.com'
 
