@@ -36,7 +36,7 @@ def get_employee_todo_progress(employee_id):
         c_tasks = sum(task['completed'] for task in todo_data)
 
         # Display progress information
-        print(f"Employee {u_data.get('name', 'Unknown')} is done ({c_tasks}/{t_tasks}):") 
+        print(f"Employee{u_data.get('name','Unknown')}({c_tasks}/{t_tasks}):")
 
         # Display titles of completed tasks
         for task in todo_data:
