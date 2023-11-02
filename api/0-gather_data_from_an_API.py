@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """
-This script fetches and displays the TODO list progress for a given employee ID using a REST API.
+This script fetches and displays the TODO list
 """
 
 import sys
 import requests
+
 
 def get_employee_todo_progress(employee_id):
     """
@@ -35,7 +36,7 @@ def get_employee_todo_progress(employee_id):
         completed_tasks = sum(task['completed'] for task in todo_data)
 
         # Display progress information
-        print(f"Employee {user_data.get('name', 'Unknown')} is done with tasks ({completed_tasks}/{total_tasks}):")
+        print(f"Employee {user_data.get('name', 'Unknown')} is done with tasks ({completed_tasks}/{total_tasks}):")t 
 
         # Display titles of completed tasks
         for task in todo_data:
