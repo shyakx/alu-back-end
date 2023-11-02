@@ -45,7 +45,13 @@ def get_employee_todo_progress(employee_id):
             # Write each task to the CSV file
             for task in todo_data:
                 task_completed_status = "Completed" if task['completed'] else "Not Completed"
-                csv_writer.writerow([employee_id, employee_name, task_completed_status, task['title']])
+                csv_writer.writerow([
+                    employee_id,
+                    employee_name,
+                    task_completed_status,
+                    task['title']
+                ])
+
                 # Display titles of completed tasks
                 if task['completed']:
                     print(f"\t{task['title']}")
@@ -66,5 +72,5 @@ if __name__ == "__main__":
     # Get employee ID from the command-line argument
     employee_id = int(sys.argv[1])
 
-    # Call the function to get and display employee TODO list progress and export to CSV
+    # Call the function to get and display employee TODO list
     get_employee_todo_progress(employee_id)
