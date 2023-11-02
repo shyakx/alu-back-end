@@ -24,7 +24,7 @@ def get_employee_todo_progress(employee_id):
 
     try:
         # Fetch user details
-        u_response = requests.get(user_endpoint)
+        user_response = requests.get(user_endpoint)  # Fix variable name
         u_data = user_response.json()
 
         # Fetch user's TODO list
@@ -36,7 +36,7 @@ def get_employee_todo_progress(employee_id):
         c_tasks = sum(task['completed'] for task in todo_data)
 
         # Display progress information
-        print(f"Employee{u_data.get('name','Unknown')}({c_tasks}/{t_tasks}):")
+        print(f"Employee Name: {u_data.get('name', 'Unknown')} ({c_tasks}/{t_tasks}):")  # Correct Employee name
 
         # Display titles of completed tasks
         for task in todo_data:
