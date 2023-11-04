@@ -3,6 +3,7 @@
 Module to retrieve and display 
 employee TODO list progress and export in CSV format.
 """
+
 import requests
 import csv
 from sys import argv
@@ -13,6 +14,7 @@ def get_employee_todo_progress(employee_id):
     Function to get and display employee TODO list progress and 
     export in CSV format.
     """
+    
     # API endpoint for employee information
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     # API endpoint for employee's TODO list
