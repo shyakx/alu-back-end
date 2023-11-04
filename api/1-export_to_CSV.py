@@ -1,77 +1,51 @@
 #!/usr/bin/python3
 """
-This script fetches and displays the TODO list and exports it to a CSV file.
+Module to retrieve and display employee TODO list progress and export in CSV format.
 """
 
-import sys
 import requests
 import csv
-
+from sys import argv
 
 def get_employee_todo_progress(employee_id):
     """
-    Fetch and display the TODO list progress for a given employee ID.
-
-    :param employee_id: Integer representing the employee ID.
+    Function to get and display employee TODO list progress and export in CSV format.
     """
-    # Base URL for the JSONPlaceholder API
-    base_url = 'https://jsonplaceholder.typicode.com'
+    # API endpoint for employee information
+    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    # API endpoint for employee's TODO list
+    todo_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
 
-    # Endpoint for user details
-    user_endpoint = f'{base_url}/users/{employee_id}'
+    # Fetching user information
+    user_response = requests.get(user_url)
+    user_data = user_response.json()
+    user_id = user_data.get("id")
+    username = user_data.get("username")
 
-    # Endpoint for user's TODO list
-    todo_endpoint = f'{base_url}/todos?userId={employee_id}'
+    # Fetching TODO list
+    todo_response = requests.get(todo_url)
+    todo_data = todo_response.json()
 
-    try:
-        # Fetch user details
-        user_response = requests.get(user_endpoint)
-        u_data = user_response.json()
+    # Writing data to CSV file
+    csv_file_path = f"{user_id}.csv"
+    with open(csv_file_path, mode='w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
-        # Fetch user's TODO list
-        todo_response = requests.get(todo_endpoint)
-        todo_data = todo_response.json()
+        for task in todo_data:
+            task_completed_status = "COMPLETED" if task.get("completed") else "NOT COMPLETED"
+            task_title = task.get("title")
+            csv_writer.writerow([user_id, username, task_completed_status, task_title])
 
-        # Display progress information
-        employee_name = u_data.get('username', 'Unknown')
-        print(f"Employee Name: {employee_name}")
+    print(f"Employee {username} is done with tasks ({user_id}/{len(todo_data)}):")
+    for task in todo_data:
+        print(f"\t{task['title']}")
 
-        # Export tasks to CSV
-        csv_file_name = f"{employee_id}.csv"
-        with open(csv_file_name, 'w', newline='') as csv_file:
-            csv_writer = csv.writer(csv_file)
-            csv_writer.writerow
-            (["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-            # Write each task to the CSV file
-            for task in todo_data:
-                task_completed_status = "Completed" if task['completed'] 
-                                                    else "Not Completed"
-                csv_writer.writerow([
-                    employee_id,
-                    employee_name,
-                    task_completed_status,
-                    task['title']
-                ])
-
-                # Display titles of completed tasks
-                if task['completed']:
-                    print(f"\t{task['title']}")
-
-        print(f"Tasks exported to {csv_file_name}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-
+    print(f"Data exported to {csv_file_path}")
 
 if __name__ == "__main__":
-    # Check if an employee ID is provided as a command-line argument
-    if len(sys.argv) != 2:
+    if len(argv) != 2:
         print("Usage: python script.py <employee_id>")
-        sys.exit(1)
-
-    # Get employee ID from the command-line argument
-    employee_id = int(sys.argv[1])
-
-    # Call the function to get and display employee TODO list
-    get_employee_todo_progress(employee_id)
+    else:
+        employee_id = int(argv[1])
+        get_employee_todo_progress(employee_id)
