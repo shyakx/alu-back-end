@@ -3,7 +3,6 @@
 Module to retrieve and display 
 employee TODO list progress and export in CSV format.
 """
-
 import requests
 import csv
 from sys import argv
